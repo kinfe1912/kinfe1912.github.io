@@ -1,4 +1,93 @@
 # Approach
 
-- What was your approach to the problem and what is your solution?
-- You should also include approaches that did not work.
+To perform the image processing on an image of a choice first the image has to be converted to a text file using the matlab script provided. After the image is converted to an appropriate text file set the number of rows and columns in the code. 
+
+```
+module top#(
+    parameter NROWS = 240, // No of rows (limited by the scarce memory resources of the selected part)
+    parameter NCOLS = 320) // No of columns (limited by the scarce memory resources of the selected part)
+```
+Using the number of rows and columns number of pixels will be known 'localparam NPIXELS = NROWS * NCOLS; // No of pixels`. 
+
+It is assumed that the code will be running before starting to send the pixel (RGB) data through UART from the PC. Hence, the first byte that will be received will be the red component of pixel, after that the green component and lastly blue component. If this assumption is violated then the RGB data need to be enclosed in a packet with a de-limiter/synchronization word indicating the start of frame. Similarly, the code needs to be introduced in FPGA to de-packetize the data before passing it to the processing module. 
+
+Instantiate memory module to store the gray image. It is necessary becausae the preceding vga and hdmi. IP cores will expect continuous data flow at 25 MHz while the input image is coming through UART interface at 115200 baud rate. For memory sizing, 25 MHz/ 115200 = 217, i.e. the vga controller can consume a complete image data while 217 pixels of the next image has arrived. So, the memory depth should be greater than or equal to image size + 217.
+
+Before sending the converted image data to the borad the borad needs to be programmed by generating a bitstrean file. However, a bitstream file is volatile. which means if a poer is turned off on the borad or the borad gets unplugged after programmed using the bitstream file the configuration data will be lost. To solve this issue a memory configuration file (.mcs) file need to be generated from the bit file. To generate a memory configuration file in vivado :
+- go to tools > memory configuration file
+- create the appropriate configuration device 
+- program using the generated .mcs file
+- after the programing the configuration the borad can be programmed using the bitstream file and the issue of volatility will be solved 
+
+After the boolean board is programmed the following matlab can be used to send the image dtata through UART interface to the boolean board.
+```MATLAB
+clc
+clear all
+close all
+%% declare the serial port and the baud rate 
+ins=serial('/dev/tty.usbserial-8872482002AE1','BaudRate',115200); 
+fopen(ins);
+A = fopen('/Users/dessekinfemichaelalemu/Desktop/ImageText.txt');
+txdata = textscan(A, '%s');
+txdata = txdata{1};
+txdata = hex2dec(txdata);
+%% send the text image file in acontinous loop through UART
+for i = 1:length(txdata)
+    fwrite(ins, txdata(i),'uint8');
+end
+fclose(ins);
+```
+Now the HDMI display can be connected and observe the image on a screen.
+
+## Simulation
+
+[vivado_project_sim_rgb2gray](https://mygit.th-deg.de/kd26759/fpga_kinras/-/tree/main/vivado_project_sim_rgb2gray) is the project to simulate and test the uart data recieving and RGB to grayscale conversion. us the matlab file `imageToText.m` or following matlab script to convert an image of choice to a text file. 
+```MATLAB
+% %% Convert an image to a text file
+clc
+clear all
+close all
+
+% %% Reading
+G= imread('test.ppm');
+% imshow(G);
+
+%% Reference output display
+%H= rgb2gray(G);
+%imshow(H);
+
+
+%Optional resize
+%G= imresize(G,[720 1280]);
+%G= imresize(G,[256 256]);
+G= imresize(G,[25 25]);
+%img=G;
+% imshow(G);
+
+H= rgb2gray(G);
+ imshow(H);
+G = permute(G,[3 2 1]);
+[R,C]=size(G);
+G= reshape(G,R*C,1);
+
+G = dec2hex(G);
+%% Open a file for writing
+fid= fopen('ImageText.txt','w');
+
+
+%% Print in Image Values
+for i=1:length(G(:,1)), 
+fprintf(fid,'%s\n',G(i,:));
+end 
+
+%% Close the file:
+fclose(fid);
+```
+The text file is used as test input in vivado simulation.  However if a different way of conversion is used it is necessary to change the file name in the code `fdin = $fopen ("ImageText.txt","r");`
+
+It is to be noted since UART uses very low rates compared to simulation time steps, for large resolutions simulation takes longer time.Hence to verify the working of the implemetation, small resolution images maybe considered. 
+
+VGA and HDMI cores can not be verified through display using simulation. The onl eay to check them is to verify the timings and data values in the simulation waveform.
+
+## Block Diagram
+![Screenshot 2022-07-19 at 10 49 57](https://user-images.githubusercontent.com/88380951/179709403-6779f0bd-93a6-4044-afe4-c319e3785ed0.png)

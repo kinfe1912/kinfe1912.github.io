@@ -1,3 +1,18 @@
 # Relevant concepts
 
-Introduce the relevant concepts to understand the problem and your solution.
+Image processing plays an important role on various computer vision applications, such as **biomedical imaging**, **surviellance system**, **object detection**. Real-time images are usually composed of three primary colors, *red*, *blue*, *green* also known as **RGB**. In various image processing applications, most processings are require to conduct on each pixel. It is not feasible to process RGB pixels because of high computational complexity and storage requirment. Due to this issue RGB images are first converted to gray image for further processing. 
+
+Grayscale images are most commonly used in image processing because smaller data enables developers to do more complex operations in a shorter time. There are a number of commonly used methods to convert an RGB image to a grayscale image, such as **average method** and **weighted method**.
+
+1. **Average Method**: 
+    In this method the average value of R, G, B, values is taken for the gray scale. 
+    Nominally: `Grayscale = (R + G + B)/3`. Although mathematically correct, this method doesn't work as expected due to a different light sensetivity of human eyes. 
+
+2. **Weighted Method**:
+    This method weighs the Green, Red, and Blue colors according to their wavelength. `Grayscale = 0.299R + 0.587G + 0.114B`. 
+
+In this project HDMI cores are used to display the converted gray scale image data on a monitor. However, it is to be noted that gray scale value has one 8bit pixel component whereas VGA and HDMI cores requires 3x 8bit pixel components. So there are two ways to deal with this problem
+ 1. Input all the three color lines. This option is implemented in the project [vivado_project_impl_opt1_1](https://mygit.th-deg.de/kd26759/fpga_kinras/-/tree/main/vivado_project_impl_opt1_1). 
+ 2. perform a weighting operation and input the RGB weightd components to the VGA ingine by applying the concept that ultimately RGB components will be mixed in analog domain so it will be equivalent to the sum operation.
+
+

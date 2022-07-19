@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>The problem &#8212; Sphinx-book template  documentation</title>
+    <title>Overview &#8212; Image processing on FPGA  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -21,7 +21,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
@@ -30,12 +30,12 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
-    <link rel="shortcut icon" href="_static/apple_notes_icon_public_domain_via_wikimedia_commons.svg"/>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="shortcut icon" href="_static/FpgaServices.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Relevant concepts" href="ch2-relevant-concepts.html" />
-    <link rel="prev" title="Title" href="index.html" />
+    <link rel="prev" title="Simple Image Processing Process on Xilinix Sparten 7 FPGA Boolean Board" href="index.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -76,10 +76,10 @@
         
       
       
-      <img src="_static/apple_notes_icon_public_domain_via_wikimedia_commons.svg" class="logo" alt="logo">
+      <img src="_static/FpgaServices.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Sphinx-book template  documentation</h1>
+      <h1 class="site-logo" id="site-title">Image processing on FPGA  documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -95,7 +95,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   The problem
+   Overview
   </a>
  </li>
  <li class="toctree-l1">
@@ -111,21 +111,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="ch4-results.html">
    Results
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown_examples.html">
-   Markdown examples
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="spellcheck.html">
-   Spellcheck
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="editing_video.html">
-   Editing and embedding a video
   </a>
  </li>
 </ul>
@@ -250,7 +235,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>The problem</h1>
+                <h1>Overview</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -262,9 +247,15 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="the-problem">
-<h1>The problem<a class="headerlink" href="#the-problem" title="Permalink to this headline">#</a></h1>
-<p>What is the problem, why do you want to solve that?</p>
+  <section id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">#</a></h1>
+<p>This project performs a simple gray scale conversion on an image data. The image will be converted to a binary text format using a matlab script before sent to the boolean board. The converted binary text will be sent to the boolean board through UART (Universal asynchronous receiver-transmitter) interface in acontinous loop. Docklight or other terminal signal to send the text image through UART in a continous loop at 115200 baud rate. For this project a simple matlab script is used to send the image data to the board. The processed image will be displayed on a monitor using HDMI display. A UART loopback is implemented to the project to make it possible to show the processed data be displayed line by line while the transimission is in progress. in general this project have:</p>
+<ul class="simple">
+<li><p>a simple image manupilation using verilog</p></li>
+<li><p>UART interface implementation</p></li>
+<li><p>HDMI implementation</p></li>
+<li><p>a separate project folder for the simulation purpose</p></li>
+</ul>
 </section>
 
 
@@ -279,7 +270,7 @@ title="Print to PDF"
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Title</p>
+            <p class="prev-next-title">Simple Image Processing Process on Xilinix Sparten 7 FPGA Boolean Board</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="ch2-relevant-concepts.html" title="next page">
@@ -296,9 +287,9 @@ title="Print to PDF"
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By Gökçe Aydos<br/>
+    By Kinfemichael Desse<br/>
   
-      &copy; Copyright Creative Commons Attribution 4.0 International License.<br/>
+      &copy; Copyright .<br/>
 </p>
         </footer>
     </div>

@@ -1,3 +1,8 @@
-# The problem
+# Overview 
 
-What is the problem, why do you want to solve that?
+This project performs a simple gray scale conversion on an image data. The image will be converted to a binary text format using a matlab script before sent to the boolean board. The converted binary text will be sent to the boolean board through UART (Universal asynchronous receiver-transmitter) interface in acontinous loop. Docklight or other terminal signal to send the text image through UART in a continous loop at 115200 baud rate. For this project a simple matlab script is used to send the image data to the board. The processed image will be displayed on a monitor using HDMI display. A UART loopback is implemented to the project to make it possible to show the processed data be displayed line by line while the transimission is in progress. in general this project have: 
+- a simple image manupilation using verilog 
+- UART interface implementation
+- HDMI implementation
+- a separate project folder for the simulation purpose
+

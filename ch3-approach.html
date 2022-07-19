@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Approach &#8212; Sphinx-book template  documentation</title>
+    <title>Approach &#8212; Image processing on FPGA  documentation</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -21,7 +21,7 @@
     href="_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
     <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
-    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=62ba249389abaaa9ffc34bf36a076bdc1d65ee18" type="text/css" />
+    <link rel="stylesheet" href="_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     
   <!-- Pre-loaded scripts that we'll load fully later -->
   <link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
@@ -30,8 +30,8 @@
     <script src="_static/jquery.js"></script>
     <script src="_static/underscore.js"></script>
     <script src="_static/doctools.js"></script>
-    <script src="_static/scripts/sphinx-book-theme.js?digest=f31d14ad54b65d19161ba51d4ffff3a77ae00456"></script>
-    <link rel="shortcut icon" href="_static/apple_notes_icon_public_domain_via_wikimedia_commons.svg"/>
+    <script src="_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <link rel="shortcut icon" href="_static/FpgaServices.png"/>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Results" href="ch4-results.html" />
@@ -76,10 +76,10 @@
         
       
       
-      <img src="_static/apple_notes_icon_public_domain_via_wikimedia_commons.svg" class="logo" alt="logo">
+      <img src="_static/FpgaServices.png" class="logo" alt="logo">
       
       
-      <h1 class="site-logo" id="site-title">Sphinx-book template  documentation</h1>
+      <h1 class="site-logo" id="site-title">Image processing on FPGA  documentation</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="search.html" method="get">
@@ -95,7 +95,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="ch1-problem.html">
-   The problem
+   Overview
   </a>
  </li>
  <li class="toctree-l1">
@@ -111,21 +111,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="ch4-results.html">
    Results
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="markdown_examples.html">
-   Markdown examples
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="spellcheck.html">
-   Spellcheck
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="editing_video.html">
-   Editing and embedding a video
   </a>
  </li>
 </ul>
@@ -238,12 +223,41 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation">
+   Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#block-diagram">
+   Block Diagram
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -255,6 +269,24 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#simulation">
+   Simulation
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#block-diagram">
+   Block Diagram
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -264,10 +296,93 @@ title="Print to PDF"
                 
   <section id="approach">
 <h1>Approach<a class="headerlink" href="#approach" title="Permalink to this headline">#</a></h1>
+<p>To perform the image processing on an image of a choice first the image has to be converted to a text file using the matlab script provided. After the image is converted to an appropriate text file set the number of rows and columns in the code.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">module</span> <span class="n">top</span><span class="c1">#(</span>
+    <span class="n">parameter</span> <span class="n">NROWS</span> <span class="o">=</span> <span class="mi">240</span><span class="p">,</span> <span class="o">//</span> <span class="n">No</span> <span class="n">of</span> <span class="n">rows</span> <span class="p">(</span><span class="n">limited</span> <span class="n">by</span> <span class="n">the</span> <span class="n">scarce</span> <span class="n">memory</span> <span class="n">resources</span> <span class="n">of</span> <span class="n">the</span> <span class="n">selected</span> <span class="n">part</span><span class="p">)</span>
+    <span class="n">parameter</span> <span class="n">NCOLS</span> <span class="o">=</span> <span class="mi">320</span><span class="p">)</span> <span class="o">//</span> <span class="n">No</span> <span class="n">of</span> <span class="n">columns</span> <span class="p">(</span><span class="n">limited</span> <span class="n">by</span> <span class="n">the</span> <span class="n">scarce</span> <span class="n">memory</span> <span class="n">resources</span> <span class="n">of</span> <span class="n">the</span> <span class="n">selected</span> <span class="n">part</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Using the number of rows and columns number of pixels will be known ‘localparam NPIXELS = NROWS * NCOLS; // No of pixels`.</p>
+<p>It is assumed that the code will be running before starting to send the pixel (RGB) data through UART from the PC. Hence, the first byte that will be received will be the red component of pixel, after that the green component and lastly blue component. If this assumption is violated then the RGB data need to be enclosed in a packet with a de-limiter/synchronization word indicating the start of frame. Similarly, the code needs to be introduced in FPGA to de-packetize the data before passing it to the processing module.</p>
+<p>Instantiate memory module to store the gray image. It is necessary becausae the preceding vga and hdmi. IP cores will expect continuous data flow at 25 MHz while the input image is coming through UART interface at 115200 baud rate. For memory sizing, 25 MHz/ 115200 = 217, i.e. the vga controller can consume a complete image data while 217 pixels of the next image has arrived. So, the memory depth should be greater than or equal to image size + 217.</p>
+<p>Before sending the converted image data to the borad the borad needs to be programmed by generating a bitstrean file. However, a bitstream file is volatile. which means if a poer is turned off on the borad or the borad gets unplugged after programmed using the bitstream file the configuration data will be lost. To solve this issue a memory configuration file (.mcs) file need to be generated from the bit file. To generate a memory configuration file in vivado :</p>
 <ul class="simple">
-<li><p>What was your approach to the problem and what is your solution?</p></li>
-<li><p>You should also include approaches that did not work.</p></li>
+<li><p>go to tools &gt; memory configuration file</p></li>
+<li><p>create the appropriate configuration device</p></li>
+<li><p>program using the generated .mcs file</p></li>
+<li><p>after the programing the configuration the borad can be programmed using the bitstream file and the issue of volatility will be solved</p></li>
 </ul>
+<p>After the boolean board is programmed the following matlab can be used to send the image dtata through UART interface to the boolean board.</p>
+<div class="highlight-MATLAB notranslate"><div class="highlight"><pre><span></span><span class="nb">clc</span><span class="w"></span>
+<span class="nb">clear</span><span class="w"> </span><span class="nb">all</span><span class="w"></span>
+<span class="nb">close</span><span class="w"> </span><span class="nb">all</span><span class="w"></span>
+<span class="c">%% declare the serial port and the baud rate </span><span class="w"></span>
+<span class="n">ins</span><span class="p">=</span><span class="n">serial</span><span class="p">(</span><span class="s">&#39;/dev/tty.usbserial-8872482002AE1&#39;</span><span class="p">,</span><span class="s">&#39;BaudRate&#39;</span><span class="p">,</span><span class="mi">115200</span><span class="p">);</span><span class="w"> </span>
+<span class="nb">fopen</span><span class="p">(</span><span class="n">ins</span><span class="p">);</span><span class="w"></span>
+<span class="n">A</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">fopen</span><span class="p">(</span><span class="s">&#39;/Users/dessekinfemichaelalemu/Desktop/ImageText.txt&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">txdata</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">textscan</span><span class="p">(</span><span class="n">A</span><span class="p">,</span><span class="w"> </span><span class="s">&#39;%s&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="n">txdata</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="n">txdata</span><span class="p">{</span><span class="mi">1</span><span class="p">};</span><span class="w"></span>
+<span class="n">txdata</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">hex2dec</span><span class="p">(</span><span class="n">txdata</span><span class="p">);</span><span class="w"></span>
+<span class="c">%% send the text image file in acontinous loop through UART</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">txdata</span><span class="p">)</span><span class="w"></span>
+<span class="w">    </span><span class="nb">fwrite</span><span class="p">(</span><span class="n">ins</span><span class="p">,</span><span class="w"> </span><span class="n">txdata</span><span class="p">(</span><span class="nb">i</span><span class="p">),</span><span class="s">&#39;uint8&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="k">end</span><span class="w"></span>
+<span class="nb">fclose</span><span class="p">(</span><span class="n">ins</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>Now the HDMI display can be connected and observe the image on a screen.</p>
+<section id="simulation">
+<h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">#</a></h2>
+<p><a class="reference external" href="https://mygit.th-deg.de/kd26759/fpga_kinras/-/tree/main/vivado_project_sim_rgb2gray">vivado_project_sim_rgb2gray</a> is the project to simulate and test the uart data recieving and RGB to grayscale conversion. us the matlab file <code class="docutils literal notranslate"><span class="pre">imageToText.m</span></code> or following matlab script to convert an image of choice to a text file.</p>
+<div class="highlight-MATLAB notranslate"><div class="highlight"><pre><span></span><span class="c">% %% Convert an image to a text file</span><span class="w"></span>
+<span class="nb">clc</span><span class="w"></span>
+<span class="nb">clear</span><span class="w"> </span><span class="nb">all</span><span class="w"></span>
+<span class="nb">close</span><span class="w"> </span><span class="nb">all</span><span class="w"></span>
+
+<span class="c">% %% Reading</span><span class="w"></span>
+<span class="n">G</span><span class="p">=</span><span class="w"> </span><span class="nb">imread</span><span class="p">(</span><span class="s">&#39;test.ppm&#39;</span><span class="p">);</span><span class="w"></span>
+<span class="c">% imshow(G);</span><span class="w"></span>
+
+<span class="c">%% Reference output display</span><span class="w"></span>
+<span class="c">%H= rgb2gray(G);</span><span class="w"></span>
+<span class="c">%imshow(H);</span><span class="w"></span>
+
+
+<span class="c">%Optional resize</span><span class="w"></span>
+<span class="c">%G= imresize(G,[720 1280]);</span><span class="w"></span>
+<span class="c">%G= imresize(G,[256 256]);</span><span class="w"></span>
+<span class="n">G</span><span class="p">=</span><span class="w"> </span><span class="nb">imresize</span><span class="p">(</span><span class="n">G</span><span class="p">,[</span><span class="mi">25</span><span class="w"> </span><span class="mi">25</span><span class="p">]);</span><span class="w"></span>
+<span class="c">%img=G;</span><span class="w"></span>
+<span class="c">% imshow(G);</span><span class="w"></span>
+
+<span class="n">H</span><span class="p">=</span><span class="w"> </span><span class="nb">rgb2gray</span><span class="p">(</span><span class="n">G</span><span class="p">);</span><span class="w"></span>
+<span class="w"> </span><span class="nb">imshow</span><span class="p">(</span><span class="n">H</span><span class="p">);</span><span class="w"></span>
+<span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">permute</span><span class="p">(</span><span class="n">G</span><span class="p">,[</span><span class="mi">3</span><span class="w"> </span><span class="mi">2</span><span class="w"> </span><span class="mi">1</span><span class="p">]);</span><span class="w"></span>
+<span class="p">[</span><span class="n">R</span><span class="p">,</span><span class="n">C</span><span class="p">]=</span><span class="nb">size</span><span class="p">(</span><span class="n">G</span><span class="p">);</span><span class="w"></span>
+<span class="n">G</span><span class="p">=</span><span class="w"> </span><span class="nb">reshape</span><span class="p">(</span><span class="n">G</span><span class="p">,</span><span class="n">R</span><span class="o">*</span><span class="n">C</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span><span class="w"></span>
+
+<span class="n">G</span><span class="w"> </span><span class="p">=</span><span class="w"> </span><span class="nb">dec2hex</span><span class="p">(</span><span class="n">G</span><span class="p">);</span><span class="w"></span>
+<span class="c">%% Open a file for writing</span><span class="w"></span>
+<span class="n">fid</span><span class="p">=</span><span class="w"> </span><span class="nb">fopen</span><span class="p">(</span><span class="s">&#39;ImageText.txt&#39;</span><span class="p">,</span><span class="s">&#39;w&#39;</span><span class="p">);</span><span class="w"></span>
+
+
+<span class="c">%% Print in Image Values</span><span class="w"></span>
+<span class="k">for</span><span class="w"> </span><span class="nb">i</span><span class="p">=</span><span class="mi">1</span><span class="p">:</span><span class="nb">length</span><span class="p">(</span><span class="n">G</span><span class="p">(:,</span><span class="mi">1</span><span class="p">)),</span><span class="w"> </span>
+<span class="nb">fprintf</span><span class="p">(</span><span class="n">fid</span><span class="p">,</span><span class="s">&#39;%s\n&#39;</span><span class="p">,</span><span class="n">G</span><span class="p">(</span><span class="nb">i</span><span class="p">,:));</span><span class="w"></span>
+<span class="k">end</span><span class="w"> </span>
+
+<span class="c">%% Close the file:</span><span class="w"></span>
+<span class="nb">fclose</span><span class="p">(</span><span class="n">fid</span><span class="p">);</span><span class="w"></span>
+</pre></div>
+</div>
+<p>The text file is used as test input in vivado simulation.  However if a different way of conversion is used it is necessary to change the file name in the code <code class="docutils literal notranslate"><span class="pre">fdin</span> <span class="pre">=</span> <span class="pre">$fopen</span> <span class="pre">(&quot;ImageText.txt&quot;,&quot;r&quot;);</span></code></p>
+<p>It is to be noted since UART uses very low rates compared to simulation time steps, for large resolutions simulation takes longer time.Hence to verify the working of the implemetation, small resolution images maybe considered.</p>
+<p>VGA and HDMI cores can not be verified through display using simulation. The onl eay to check them is to verify the timings and data values in the simulation waveform.</p>
+</section>
+<section id="block-diagram">
+<h2>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this headline">#</a></h2>
+<p><img alt="Screenshot 2022-07-19 at 10 49 57" src="https://user-images.githubusercontent.com/88380951/179709403-6779f0bd-93a6-4044-afe4-c319e3785ed0.png" /></p>
+</section>
 </section>
 
 
@@ -299,9 +414,9 @@ title="Print to PDF"
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By Gökçe Aydos<br/>
+    By Kinfemichael Desse<br/>
   
-      &copy; Copyright Creative Commons Attribution 4.0 International License.<br/>
+      &copy; Copyright .<br/>
 </p>
         </footer>
     </div>
