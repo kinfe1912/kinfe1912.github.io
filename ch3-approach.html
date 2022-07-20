@@ -246,6 +246,11 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hdmi">
+   HDMI
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#simulation">
    Simulation
   </a>
@@ -274,6 +279,11 @@ title="Print to PDF"
                         </div>
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hdmi">
+   HDMI
+  </a>
+ </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#simulation">
    Simulation
@@ -331,6 +341,16 @@ title="Print to PDF"
 </pre></div>
 </div>
 <p>Now the HDMI display can be connected and observe the image on a screen.</p>
+<section id="hdmi">
+<h2>HDMI<a class="headerlink" href="#hdmi" title="Permalink to this headline">#</a></h2>
+<p>The HDMI/DVI encoder translates VGA signal according to HDMI specification 1.3a with interfaces for audio and auxilary data.
+It can also work in DVI mode with audio and auxilary data disabled for monitors that are not compliant with HDMI specification.</p>
+<p>Part of the codes in this IP core originates from [XAPP460: Video Connectivity Using TMDS I/O in Spartan-3A FPGAs] written by Bob Feng.</p>
+<p><strong>Note</strong>:<br />
+For monitor (even ones that with HDMI port) that are not fully compliant with HDMI specification, the video guardband defined in the HDMI specification can be interpreted as two extra pixel by the monitor.
+As a result, you may see a two-pixel-wide light pink vertical line on the left of the monitor.
+If you see this, configure the core in DVI mode (so that video guardband and preambles are both disabled) or see if there is an “AV” settings on your monitor to force it into HDMI compliant mode.</p>
+</section>
 <section id="simulation">
 <h2>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">#</a></h2>
 <p><a class="reference external" href="https://mygit.th-deg.de/kd26759/fpga_kinras/-/tree/main/vivado_project_sim_rgb2gray">vivado_project_sim_rgb2gray</a> is the project to simulate and test the uart data recieving and RGB to grayscale conversion. us the matlab file <code class="docutils literal notranslate"><span class="pre">imageToText.m</span></code> or following matlab script to convert an image of choice to a text file.</p>
@@ -375,9 +395,9 @@ title="Print to PDF"
 <span class="nb">fclose</span><span class="p">(</span><span class="n">fid</span><span class="p">);</span><span class="w"></span>
 </pre></div>
 </div>
-<p>The text file is used as test input in vivado simulation.  However if a different way of conversion is used it is necessary to change the file name in the code <code class="docutils literal notranslate"><span class="pre">fdin</span> <span class="pre">=</span> <span class="pre">$fopen</span> <span class="pre">(&quot;ImageText.txt&quot;,&quot;r&quot;);</span></code></p>
+<p>The text file is used as test input in vivado simulation.  However if a different way of conversion is used, it is necessary to change the file name in the code <code class="docutils literal notranslate"><span class="pre">fdin</span> <span class="pre">=</span> <span class="pre">$fopen</span> <span class="pre">(&quot;ImageText.txt&quot;,&quot;r&quot;);</span></code></p>
 <p>It is to be noted since UART uses very low rates compared to simulation time steps, for large resolutions simulation takes longer time.Hence to verify the working of the implemetation, small resolution images maybe considered.</p>
-<p>VGA and HDMI cores can not be verified through display using simulation. The onl eay to check them is to verify the timings and data values in the simulation waveform.</p>
+<p>VGA and HDMI cores can not be verified through display using simulation. The only way to check them is to verify the timings and data values in the simulation waveform.</p>
 </section>
 <section id="block-diagram">
 <h2>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this headline">#</a></h2>
@@ -416,7 +436,7 @@ title="Print to PDF"
   
     By Kinfemichael Desse<br/>
   
-      &copy; Copyright .<br/>
+      &copy; Copyright GNU Affero General Public License v3.0.<br/>
 </p>
         </footer>
     </div>

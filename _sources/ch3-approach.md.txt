@@ -13,7 +13,7 @@ It is assumed that the code will be running before starting to send the pixel (R
 
 Instantiate memory module to store the gray image. It is necessary becausae the preceding vga and hdmi. IP cores will expect continuous data flow at 25 MHz while the input image is coming through UART interface at 115200 baud rate. For memory sizing, 25 MHz/ 115200 = 217, i.e. the vga controller can consume a complete image data while 217 pixels of the next image has arrived. So, the memory depth should be greater than or equal to image size + 217.
 
-Before sending the converted image data to the borad the borad needs to be programmed by generating a bitstrean file. However, a bitstream file is volatile. which means if a poer is turned off on the borad or the borad gets unplugged after programmed using the bitstream file the configuration data will be lost. To solve this issue a memory configuration file (.mcs) file need to be generated from the bit file. To generate a memory configuration file in vivado :
+Before sending the converted image data to the borad the borad needs to be programmed by generating a bitstrean file. However, a bitstream file is volatile. which means if power is turned off on the borad or the borad gets unplugged after programmed using the bitstream file the configuration data will be lost. To solve this issue a memory configuration file (.mcs) file need to be generated from the bit file. To generate a memory configuration file in vivado :
 - go to tools > memory configuration file
 - create the appropriate configuration device 
 - program using the generated .mcs file
@@ -38,6 +38,19 @@ end
 fclose(ins);
 ```
 Now the HDMI display can be connected and observe the image on a screen.
+
+
+## HDMI
+
+The HDMI/DVI encoder translates VGA signal according to HDMI specification 1.3a with interfaces for audio and auxilary data.
+It can also work in DVI mode with audio and auxilary data disabled for monitors that are not compliant with HDMI specification.
+
+Part of the codes in this IP core originates from [XAPP460: Video Connectivity Using TMDS I/O in Spartan-3A FPGAs] written by Bob Feng.
+
+**Note**:  
+For monitor (even ones that with HDMI port) that are not fully compliant with HDMI specification, the video guardband defined in the HDMI specification can be interpreted as two extra pixel by the monitor.
+As a result, you may see a two-pixel-wide light pink vertical line on the left of the monitor.
+If you see this, configure the core in DVI mode (so that video guardband and preambles are both disabled) or see if there is an "AV" settings on your monitor to force it into HDMI compliant mode.
 
 ## Simulation
 
@@ -83,11 +96,12 @@ end
 %% Close the file:
 fclose(fid);
 ```
-The text file is used as test input in vivado simulation.  However if a different way of conversion is used it is necessary to change the file name in the code `fdin = $fopen ("ImageText.txt","r");`
+The text file is used as test input in vivado simulation.  However if a different way of conversion is used, it is necessary to change the file name in the code `fdin = $fopen ("ImageText.txt","r");`
 
 It is to be noted since UART uses very low rates compared to simulation time steps, for large resolutions simulation takes longer time.Hence to verify the working of the implemetation, small resolution images maybe considered. 
 
-VGA and HDMI cores can not be verified through display using simulation. The onl eay to check them is to verify the timings and data values in the simulation waveform.
+VGA and HDMI cores can not be verified through display using simulation. The only way to check them is to verify the timings and data values in the simulation waveform.
+
 
 ## Block Diagram
 ![Screenshot 2022-07-19 at 10 49 57](https://user-images.githubusercontent.com/88380951/179709403-6779f0bd-93a6-4044-afe4-c319e3785ed0.png)
