@@ -1,4 +1,4 @@
-# Simple Image Processing Process on Xilinix Sparten 7 FPGA Boolean Board
+# Simple Image Processing Process on Xilinix Spartan 7 FPGA Boolean Board
 
 
 ```{toctree}
