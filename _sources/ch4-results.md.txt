@@ -6,7 +6,7 @@
 * As the memory resources of the selected device are scarce with respect to the image storage requirment, a amximu resolution of 320x240 can be used. However, the display supports a minimum resolution of 640x480. So the image used in the test is displayed on the top left corner of the monitor.
 
 
-# Video Presentatioon
+# Video Presentation
 
 <div class="embed-responsive embed-responsive-16by9">
 <iframe width="560" height="315" src="https://www.youtube.com/embed/Fr5vpcub2gg" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
